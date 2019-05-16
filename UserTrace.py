@@ -15,6 +15,7 @@ import pandas as pd
 import os
 import datetime
 import os.path
+import tweepy
 
 DIR_SAVE_TRACE_USER = "Data/Traces"
 
@@ -135,7 +136,12 @@ def user_tweets_from_csv(place, bound_box, number_user_tarce,RemoveOriginal,api)
         user_list = data_frame_user.iloc[0:number_user_tarce ]
         for screen_name in user_list['screen_name']:
                 print("Getting tweets from : " + screen_name)
-                get_all_tweets(screen_name, place, api)
+                try:
+                    get_all_tweets(screen_name, place, api)
+                except tweepy.TweepError:
+                    print("Failed to run the command on that user, Skipping...")
+                
+
 
 
 
